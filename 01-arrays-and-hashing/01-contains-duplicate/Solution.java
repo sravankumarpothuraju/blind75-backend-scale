@@ -1,23 +1,24 @@
 package arraysandhashing.containsduplicate;
 
+import java.util.HashSet;
+
 public class Solution {
-    public boolean containsDuplicate(int[] nums) {   // 1 2 3 2
-        if (nums.length == 0) return false;
+    public boolean containsDuplicate(int[] nums) {
+        // Defensive input validation
+        if (nums == null || nums.length <= 1) {
+            return false;
+        }
 
-        for (int i = 0; i < nums.length; i++) { //1
+        // Pre-size set to completely prevent rehashing
+        int initialCapacity = (int) Math.ceil(nums.length / 0.75);
+        HashSet<Integer> hashset = new HashSet<>(initialCapacity);
 
-            for (int j = i + 1; j < nums.length; j++) { // 2 3 2
-
-                if (nums[i] == nums[j]) {
-
-                    return true;
-                }
-
+        for (int num : nums) {
+            // .add() returns false if the item was already in the set
+            if (!hashset.add(num)) {
+                return true;
             }
         }
         return false;
-
     }
-
-
 }
