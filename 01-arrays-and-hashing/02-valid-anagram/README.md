@@ -20,13 +20,13 @@ Given two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `f
 
 ---
 
-- **Time Complexity**: `O(...)` | [Explain runtime]
-- **Space Complexity**: `O(...)` | [Explain space]
+- **Time Complexity**: `O(N)` | Single pass frequency mapping of both strings where N is string length.
+- **Space Complexity**: `O(N)` | Allocating auxiliary space for character frequency maps.
 
 ### 💡 Core Intuition
-[Summarize your core realization in exactly two plain-English sentences.]
+An anagram requires identical character frequencies. By building character count maps for both strings in a single pass, we can verify if they are identical in O(1) average lookup time per character.
 
 ### ⚡ Key SDE-3 Trap Cases
-*   **Null / Empty Bounds**: [How does it handle null or empty bounds?]
-*   **Performance / Language Traps**: [E.g., Character mapping, array vs map overhead]
-*   **Duplicates & Order**: [E.g., duplicate letters, Unicode characters support]
+*   **Null / Empty Bounds**: We perform defensive checks (`s == null || t == null || s.length() != t.length()`) to fail early before allocating heap memory.
+*   **Performance / Language Traps**: Using a general `HashMap<Character, Integer>` causes autoboxing overhead (primitive `char` to `Character` object). If constrained to lowercase English letters, a fixed `int[26]` array is faster and uses `O(1)` stack memory.
+*   **Unicode/Emojis Support**: For international characters or emojis, `HashMap` is required, making the code scale-flexible.

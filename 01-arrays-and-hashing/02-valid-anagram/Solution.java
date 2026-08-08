@@ -1,49 +1,35 @@
 package arraysandhashing.validanagram;
 
+import java.util.HashMap;
+
 public class Solution {
     public boolean isAnagram(String s, String t) {
-        if (s.length() != t.length()) {
-
+        // 1. Defensive length check
+        if (s == null || t == null || s.length() != t.length()) {
             return false;
         }
 
+        // 2. Blank check
         if (s.isBlank() || t.isBlank()) {
             return false;
         }
 
+        HashMap<Character, Integer> mapS = new HashMap<>();
+        HashMap<Character, Integer> mapT = new HashMap<>();
 
+        // 3. Populate frequency map for string s
         for (int i = 0; i < s.length(); i++) {
-            int countOfS = 0;
-            int countOfT = 0;
-
-            char targetChar = s.charAt(i);
-
-
-            for (int j = 0; j < s.length(); j++) {
-
-                if (targetChar == s.charAt(j)) {
-
-                    countOfS++;
-                }
-            }
-
-
-            for (int k = 0; k < t.length(); k++) {
-
-                if (targetChar == t.charAt(k)) {
-
-                    countOfT++;
-                }
-            }
-
-
-            if (countOfT != countOfS) {
-
-                return false;
-            }
-
+            char c = s.charAt(i);
+            mapS.put(c, mapS.getOrDefault(c, 0) + 1);
         }
 
-        return true;
+        // 4. Populate frequency map for string t
+        for (int i = 0; i < t.length(); i++) {
+            char c = t.charAt(i);
+            mapT.put(c, mapT.getOrDefault(c, 0) + 1);
+        }
+
+        // 5. Compare both maps (Java's .equals compares key-value pairs)
+        return mapS.equals(mapT);
     }
 }
