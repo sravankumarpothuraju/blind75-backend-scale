@@ -20,13 +20,13 @@ You may assume that each input would have exactly one solution, and you may not 
 
 ---
 
-- **Time Complexity**: `O(...)` | [Explain runtime]
-- **Space Complexity**: `O(...)` | [Explain space]
+- **Time Complexity**: `O(N)` | Single pass of the array where each lookup/insertion in the map takes amortized O(1) time.
+- **Space Complexity**: `O(N)` | Storing visited numbers and their indices in a HashMap.
 
 ### 💡 Core Intuition
-[Summarize your core realization in exactly two plain-English sentences.]
+For any number `x`, we search for its target complement `target - x` that was already traversed. By storing previously visited numbers and their indices in a hash map, we look up this complement in $O(1)$ average time.
 
 ### ⚡ Key SDE-3 Trap Cases
-*   **Null / Empty Bounds**: [How does it handle null or empty bounds?]
-*   **Performance / Language Traps**: [E.g., Integer overflow when adding, Map capacity rehashing]
-*   **Duplicates & Order**: [E.g., duplicate values in input array sharing same value but at different indices]
+*   **Null / Empty Bounds**: Standard defensive validation checking if `nums == null || nums.length < 2`.
+*   **Duplicate Elements**: If input is `[3, 3]` and target is `6`, we check the complement `3` *before* inserting the second `3` into the map. This prevents index collisions and successfully finds the pair `[0, 1]`.
+*   **Map capacity rehashing**: Sizing the `HashMap` appropriately if input size is huge to prevent expensive bucket reallocations.
